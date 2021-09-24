@@ -36,7 +36,6 @@
             <textarea v-model="form.comment" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
             <label for="floatingTextarea2">Comments</label>
         </div>
-        <input id="prodId" name="prodId" type="hidden" v-model="form.id_user" >
          <div class="text-danger mb-2 mt-2"> {{ warning }}</div>
         <button type="submit" v-on:click="submit" class="btn btn-primary mt-4"> Soumettre </button>
     </div>
@@ -67,10 +66,6 @@ export default {
        } 
     },
     methods: {
-        paramsStorage() {
-           let params=localStorage.getItem('id', response.data.user[0]['id'])
-
-        },
         submit () {
             if(this.form.type === "" && this.form.start_date==="" && this.form.end_date ==="" 
             && this.form.distance ==="" && this.form.start_time ==="" && this.form.end_time ==="")

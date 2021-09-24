@@ -42,7 +42,7 @@ class OutingController extends AbstractController
        $outing->setEndTime($postOuting["end_time"]);
        $outing->setDistance($postOuting["distance"]);
        $outing->setComment($postOuting["comment"]);
-       $outing->getUser();
+       $outing->setUser($postOuting["id"]);
 
         return $this->json(["code"=>200, 'user'=>$outing , 200]);
 

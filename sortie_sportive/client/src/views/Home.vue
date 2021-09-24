@@ -17,6 +17,8 @@ export default {
   methods: {
     submit(value){
       let values = Object.assign({}, value);
+      console.log(localStorage.getItem('id'))
+      values['id'] = parseInt(localStorage.getItem('id'))
       console.log("JE suis une value", values);
 
       axios.post("http://localhost:8000/outing/create", values)
