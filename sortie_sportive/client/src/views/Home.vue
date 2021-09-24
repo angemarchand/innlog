@@ -1,0 +1,32 @@
+<template>
+  <div class="home">
+    <FormOuting @send-data="submit" />
+  </div>
+</template>
+
+<script>
+// @ is an alias to /src
+import FormOuting from '../components/FormOuting.vue'
+import axios from 'axios'
+
+export default {
+  name: 'Home',
+  components: {
+    FormOuting
+  },
+  methods: {
+    submit(value){
+      let values = Object.assign({}, value);
+      console.log("JE suis une value", values);
+
+      axios.post("http://localhost:8000/outing/create", values)
+      .then(response => {
+        console.log("nouvelle sortie", response.data.user)
+      })
+      .catch(error => {
+        console.log(error);
+      })
+    }
+  }
+}
+</script>
