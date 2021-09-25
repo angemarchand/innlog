@@ -24,6 +24,9 @@ export default {
       axios.post("http://localhost:8000/outing/create", values)
       .then(response => {
         console.log("nouvelle sortie", response.data.user)
+        if (response.data.code){
+          this.$router.push({ name: "Register" }); 
+        }
       })
       .catch(error => {
         console.log(error);

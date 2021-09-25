@@ -42,15 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $name;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Outing::class, mappedBy="user", orphanRemoval=true)
-     */
-    private $outings;
 
-    public function __construct()
-    {
-        $this->outings = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -149,36 +141,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Outing[]
-     */
-    public function getOutings(): Collection
-    {
-        return $this->outings;
-    }
-
-    public function addOuting(Outing $outing): self
-    {
-        if (!$this->outings->contains($outing)) {
-            $this->outings[] = $outing;
-            $outing->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeOuting(Outing $outing): self
-    {
-        if ($this->outings->removeElement($outing)) {
-            // set the owning side to null (unless already changed)
-            if ($outing->getUser() === $this) {
-                $outing->setUser(null);
-            }
-        }
 
         return $this;
     }

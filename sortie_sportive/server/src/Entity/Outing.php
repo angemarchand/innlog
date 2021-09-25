@@ -43,8 +43,7 @@ class Outing
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="outings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\Column(type="integer")
      */
     private $user;
 
@@ -123,12 +122,12 @@ class Outing
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser(): ?int
     {
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(int $user): self
     {
         $this->user = $user;
 

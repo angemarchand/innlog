@@ -5,10 +5,11 @@ namespace App\Controller;
 use App\Entity\Outing;
 use App\Form\OutingType;
 use App\Repository\OutingRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/outing")
@@ -28,7 +29,7 @@ class OutingController extends AbstractController
     /**
      * @Route("/create", name="outing_create", methods="POST")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, EntityManagerInterface $em): Response
     {
         $postOuting = $request->getContent();
         // dd($postOuting);
@@ -43,15 +44,15 @@ class OutingController extends AbstractController
        $outing->setDistance($postOuting["distance"]);
        $outing->setComment($postOuting["comment"]);
        $outing->setUser($postOuting["id"]);
+    //    dd($outing);
+
+       $em->persist($outing);
+
+       $em->flush();
+
+       
 
         return $this->json(["code"=>200, 'user'=>$outing , 200]);
-
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $entityManager = $this->getDoctrine()->getManager();
-        //     $entityManager->persist($outing);
-        //     $entityManager->flush();
-  
-        // }
 
  
     }
