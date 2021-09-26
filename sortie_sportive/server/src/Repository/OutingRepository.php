@@ -19,10 +19,23 @@ class OutingRepository extends ServiceEntityRepository
         parent::__construct($registry, Outing::class);
     }
 
+    public function getOuting($user){
+        $query = $this->createQueryBuilder('o')
+            ->select('o')
+            ->innerJoin('o', 'name', 'WITH', 'o.id = u.id_outing')
+            ->where('o.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        return $query->execute();
+
+    }
+
     // /**
     //  * @return Outing[] Returns an array of Outing objects
     //  */
     /*
+
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('o')

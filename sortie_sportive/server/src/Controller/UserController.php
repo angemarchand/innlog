@@ -71,4 +71,16 @@ class UserController extends AbstractController
 
         
     }
+    /**
+     * @Route("user/{id}", name="user_show", methods={"GET"})
+     */
+    public function show($id): Response
+    {
+        $outing = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->getName($id);
+        $user = $user->find($id);
+        dd($user);
+
+    }
 }

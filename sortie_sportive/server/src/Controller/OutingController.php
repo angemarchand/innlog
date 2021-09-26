@@ -21,9 +21,14 @@ class OutingController extends AbstractController
      */
     public function index(OutingRepository $outingRepository): Response
     {
-        return $this->render('outing/index.html.twig', [
-            'outings' => $outingRepository->findAll(),
-        ]);
+        $outing = $this->getDoctrine()
+            ->getRepository(Outing::class);
+        $outing = $outing->findAll();
+
+        // dd($outing);
+
+        return $this->json(["code"=>200, 'user'=>$outing , 200]);
+        
     }
 
     /**
@@ -52,7 +57,7 @@ class OutingController extends AbstractController
 
        
 
-        return $this->json(["code"=>200, 'user'=>$outing , 200]);
+        return $this->json(["code"=>200, 'outing'=>$outing , 200]);
 
  
     }
@@ -60,12 +65,14 @@ class OutingController extends AbstractController
     /**
      * @Route("/{id}", name="outing_show", methods={"GET"})
      */
-    // public function show(Outing $outing): Response
-    // {
-    //     return $this->render('outing/show.html.twig', [
-    //         'outing' => $outing,
-    //     ]);
-    // }
+    public function show($user): Response
+    {
+        $outing = $this->getDoctrine()
+        ->getRepository(Outing::class);
+        $outing = $outing->find($user);
+        dd($outing);
+
+    }
 
     /**
      * @Route("/{id}/edit", name="outing_edit", methods={"GET","POST"})

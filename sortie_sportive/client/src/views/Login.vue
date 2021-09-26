@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-5">
         <register-form @sending-message="submit" />
     </div>
         

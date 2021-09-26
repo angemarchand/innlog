@@ -1,9 +1,9 @@
 <template>
-<div class="container w-50 ">
-    <div class="row justify-content-center bg-warning p-3">
+<div class="container w-50 mb-5 mt-5">
+    <div class="row justify-content-center bg-info p-3">
         <h1 v-if="checkIpunt()" class="card-title">Connexion</h1>
-        <h1 v-else class="card-title">Inscription</h1>
-        <p class="card-subtitle"> Tu n'as pas de compte ?</p>
+        <h1 v-else class="card-title text-white">Inscription</h1>
+        <p class="card-subtitle text-white"> Tu n'as pas de compte ?</p>
         <div class="d-flex flex-column justify-content-center align-items-center">
             <div class="mb-3">
                 <input v-if="checkIpunt() === false" v-model="form.pseudo" type="text" class="form-control p-2 rounded-0" 

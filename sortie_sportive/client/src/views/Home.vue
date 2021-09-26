@@ -1,37 +1,29 @@
 <template>
-  <div class="home">
-    <FormOuting @send-data="submit" />
+  <div class="Home">
+    <h1 class="m-4">BIENVENUE CHEZ OUTINGS SPORT </h1>
+    <div> {{infos}} </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import FormOuting from '../components/FormOuting.vue'
-import axios from 'axios'
+
+import axios from 'axios';
 
 export default {
-  name: 'Home',
-  components: {
-    FormOuting
-  },
-  methods: {
-    submit(value){
-      let values = Object.assign({}, value);
-      console.log(localStorage.getItem('id'))
-      values['id'] = parseInt(localStorage.getItem('id'))
-      console.log("JE suis une value", values);
+  
+  name:'Home',
 
-      axios.post("http://localhost:8000/outing/create", values)
-      .then(response => {
-        console.log("nouvelle sortie", response.data.user)
-        if (response.data.code){
-          this.$router.push({ name: "Register" }); 
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      })
+  data(){
+    return {
+      infos: []
     }
-  }
+    
+  },
+  mounted() {
+      //console.log('Upload component', this.infos);
+      axios.get("http://localhost:8000/outing/", )
+      .then(response => console.log((this.infos = response.data.user)))
+  },
+
 }
 </script>
