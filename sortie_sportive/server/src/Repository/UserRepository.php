@@ -45,13 +45,26 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             return $query->execute();
     }
 
-    public function getName($name){
-        $query = $this->createQueryBuilder('u')
-            ->innerJoin('u.name', 'o')
-            ->where('u.name = :name')
-            ->setParameter('name', $name)
-            ->getQuery();
-        return $query->execute();
+    // public function getUserName($id){
+    //     $query =  $this->createQueryBuilder('u')
+    //         ->where('u.id = :id')
+    //         ->setParameter('id', $id);
+    //         $query = $query->getQuery();
+    //         return $query->execute();
+    // }
+
+    public function findOneByIdJoinedToOuting(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+
+        $query = $entityManager->createQuery(
+            'SELECT u, o
+            FROM App\Entity\User u
+            INNER JOIN u.outings o
+            WHERE u.id = :id'
+        )->setParameter('id', $userId);
+
+        return $query->getOneOrNullResult();;
     }
 
     // /**

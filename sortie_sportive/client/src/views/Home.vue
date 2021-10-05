@@ -1,7 +1,12 @@
 <template>
   <div class="Home">
     <h1 class="m-4">BIENVENUE CHEZ OUTINGS SPORT </h1>
-    <div> {{infos}} </div>
+    <div class="card-cart-container">
+      <div class="card-container">
+        <div> {{infos}} </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 

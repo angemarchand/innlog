@@ -18,14 +18,14 @@ export default {
     submit(value){
       let values = Object.assign({}, value);
       console.log(localStorage.getItem('id'))
-      values['id'] = parseInt(localStorage.getItem('id'))
+      values['user_id'] = parseInt(localStorage.getItem('id'))
       console.log("JE suis une value", values);
 
       axios.post("http://localhost:8000/outing/create", values)
       .then(response => {
         console.log("nouvelle sortie", response.data.user)
         if (response.data.code){
-          this.$router.push({ name: "Register" }); 
+          this.$router.push({ name: "Profile" }); 
         }
       })
       .catch(error => {

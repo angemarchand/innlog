@@ -23,10 +23,10 @@ export default {
             axios.post("http://localhost:8000/user/login", userData)
             .then(response => {
                 console.log("Connecté", response.data)
-                localStorage.setItem('id', response.data.user[0]['id']);
-                console.log("le token");
-            if(response.data["code"] === 200){
-               this.$router.push({ name: "Home" }); 
+                localStorage.setItem('id', response.data[0]['id']);
+                console.log("id user");
+            if(response.status === 200){
+               this.$router.push({ name: "Outing" }); 
             }
             })
             .catch(error => {

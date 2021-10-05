@@ -67,8 +67,7 @@ export default {
     },
     methods: {
         submit () {
-            if(this.form.type === "" && this.form.start_date==="" && this.form.end_date ==="" 
-            && this.form.distance ==="" && this.form.start_time ==="" && this.form.end_time ==="")
+            if(this.form.type === "" && this.form.start_date==="" && this.form.end_date ==="" && this.form.distance ==="" && this.form.start_time ==="" && this.form.end_time ==="")
             {
                 this.warning = "Veuillez remplir tous les champs";
             }else{

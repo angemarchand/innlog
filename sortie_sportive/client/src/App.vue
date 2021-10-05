@@ -16,7 +16,7 @@
               </li>
               <li class="nav-item">
                 <!-- <a class="nav-link" href="#">Features</a> -->
-                <router-link class="nav-link" to="/profile"> Profil </router-link> 
+                <!-- <router-link class="nav-link" to="/profile"> Profil </router-link>  -->
               </li>
               <li class="nav-item">
                 <!-- <a class="nav-link" href="#">Pricing</a> -->

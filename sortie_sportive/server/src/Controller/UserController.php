@@ -13,8 +13,26 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 //use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+
+
 class UserController extends AbstractController
 {
+    public function __construct(){
+        $encoders = [new JsonEncoder()];
+        $defaultContext = [
+            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
+                return $object->getId();
+            },
+        ];
+        $normalizer = new ObjectNormalizer(null, null, null, null, null, null, $defaultContext);
+        $normalizers = [$normalizer];
+        $serializer = new Serializer($normalizers, $encoders);
+        $this->serializer = $serializer;
+    }
     /**
      * @Route("/user/register", name="user_register", methods="POST")
      */
@@ -60,11 +78,11 @@ class UserController extends AbstractController
         
         //dd($loginUser["email"]);
         // dd($verif_pass );
-        return $this->json(["code"=>200, 'user'=> $result, 200]);
+        // return $this->json(["code"=>200, 'user'=> $result, 200]);
 
         if($verif_email == $loginUser["email"]){
-            //return $this->json(["code"=>200, 'user'=> $verif_email, 200]);
-            return new JsonResponse(response);
+            //return $this->json(["code"=>200, 'user'=> $result, 200]);
+            return new Response($this->serializer->serialize($result, 'json', ['groups'=>['user']]));
         }else{
             return new JsonResponse(false);
         }
@@ -74,13 +92,21 @@ class UserController extends AbstractController
     /**
      * @Route("user/{id}", name="user_show", methods={"GET"})
      */
-    public function show($id): Response
+    public function show(int $id): Response
     {
-        $outing = $this->getDoctrine()
+
+        $user = $this->getDoctrine()
             ->getRepository(User::class)
-            ->getName($id);
-        $user = $user->find($id);
-        dd($user);
+            ->findOneByIdJoinedToOuting($id);
+
+        $outing = $user->getOutings();
+
+        // return JsonResponse($outing);
+
+        return $this->json(["code"=>200, 'user'=> $outing, 200]);
+
+        // dd($outing);
+        
 
     }
 }

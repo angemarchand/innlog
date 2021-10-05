@@ -42,10 +42,10 @@ class Outing
      */
     private $comment;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $user;
+    // /**
+    //  * @ORM\Column(type="integer")
+    //  */
+    // private $user;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -56,6 +56,11 @@ class Outing
      * @ORM\Column(type="string", length=255)
      */
     private $end_time;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="outings")
+     */
+    private $user_id;
 
     public function getId(): ?int
     {
@@ -122,17 +127,17 @@ class Outing
         return $this;
     }
 
-    public function getUser(): ?int
-    {
-        return $this->user;
-    }
+    // public function getUser(): ?int
+    // {
+    //     return $this->user;
+    // }
 
-    public function setUser(int $user): self
-    {
-        $this->user = $user;
+    // public function setUser(int $user): self
+    // {
+    //     $this->user = $user;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getStartTime(): ?string
     {
@@ -154,6 +159,18 @@ class Outing
     public function setEndTime(string $end_time): self
     {
         $this->end_time = $end_time;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->user_id;
+    }
+
+    public function setUserId(?User $user_id): self
+    {
+        $this->user_id = $user_id;
 
         return $this;
     }

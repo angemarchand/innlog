@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Outing;
+use App\Entity\User;
 use App\Form\OutingType;
 use App\Repository\OutingRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -24,7 +25,6 @@ class OutingController extends AbstractController
         $outing = $this->getDoctrine()
             ->getRepository(Outing::class);
         $outing = $outing->findAll();
-
         // dd($outing);
 
         return $this->json(["code"=>200, 'user'=>$outing , 200]);
@@ -37,23 +37,27 @@ class OutingController extends AbstractController
     public function new(Request $request, EntityManagerInterface $em): Response
     {
         $postOuting = $request->getContent();
-        // dd($postOuting);
         $postOuting = json_decode($postOuting, true);
-        
-       $outing = new Outing();
-       $outing->setType($postOuting["type"]);
-       $outing->setStartAt($postOuting["start_date"]);
-       $outing->setLastAt($postOuting["end_date"]);
-       $outing->setStartTime($postOuting["start_time"]);
-       $outing->setEndTime($postOuting["end_time"]);
-       $outing->setDistance($postOuting["distance"]);
-       $outing->setComment($postOuting["comment"]);
-       $outing->setUser($postOuting["id"]);
-    //    dd($outing);
+        $user = new User();
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($postOuting["user_id"]);    // relates this outing to the user
 
-       $em->persist($outing);
+        $outing = new Outing();
+        $outing->setType($postOuting["type"]);
+        $outing->setStartAt($postOuting["start_date"]);
+        $outing->setLastAt($postOuting["end_date"]);
+        $outing->setStartTime($postOuting["start_time"]);
+        $outing->setEndTime($postOuting["end_time"]);
+        $outing->setDistance($postOuting["distance"]);
+        $outing->setComment($postOuting["comment"]);
+        $outing->setUserId($user);
+  
+        // dd($outing);
 
-       $em->flush();
+        $em->persist($outing);
+
+        $em->flush();
 
        
 
@@ -62,17 +66,20 @@ class OutingController extends AbstractController
  
     }
 
-    /**
-     * @Route("/{id}", name="outing_show", methods={"GET"})
-     */
-    public function show($user): Response
-    {
-        $outing = $this->getDoctrine()
-        ->getRepository(Outing::class);
-        $outing = $outing->find($user);
-        dd($outing);
+    // /**
+    //  * @Route("/{id}", name="outing_show", methods={"GET"})
+    //  */
+    // public function show($id): Response
+    // {
+    //     $outing = $this->getDoctrine()
+    //         ->getRepository(Outing::class)
+    //         ->find($id);
 
-    }
+    //     $user = $outing->getUserId();
+    //     dd($user);
+
+    // }
+
 
     /**
      * @Route("/{id}/edit", name="outing_edit", methods={"GET","POST"})
